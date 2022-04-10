@@ -3,8 +3,7 @@ import random
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from django.db.models import Subquery, OuterRef, F, Sum, Value, DecimalField
-from django.db.models.functions import Coalesce
+from django.db.models import Subquery, OuterRef, F, Sum
 
 from store.factories import ProductFactory, OrderFactory, UserFactory, OrderItemFactory
 from store.models import Product, Order, OrderItem
@@ -44,7 +43,7 @@ class Command(BaseCommand):
         ]
 
         items_subquery = OrderItem.objects.filter(order_id=OuterRef('pk')).values('order_id').annotate(
-            ttl=Coalesce(Sum(F('price') * F('quantity')), Value(0, output_field=DecimalField()))).values('ttl')
+            ttl=Sum(F('price') * F('quantity')))
 
         Order.objects.update(
             total=Subquery(items_subquery)
