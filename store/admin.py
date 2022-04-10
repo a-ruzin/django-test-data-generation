@@ -19,13 +19,14 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'quantity')
+    list_display = ('id', 'quantity', 'total')
     search_fields = ('id', 'user__username', 'product__name')
     inlines = [OrderItemInline]
 
     @admin.display(description=_('admin_order_quantity'))
     def quantity(self, obj):
-        return str(obj.items.aggregate(qty=Sum('quantity'))['qty'])
+        return 'hoho'
+        # return str(obj.items.aggregate(qty=Sum('quantity'))['qty'])
 
 
 @admin.register(OrderItem)

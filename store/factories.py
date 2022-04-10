@@ -9,7 +9,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
         model = Product
 
     name = factory.Faker('sentence', nb_words=3, variable_nb_words=True)
-    description = factory.Faker('sentence', nb_words=10, variable_nb_words=True)
+    description = factory.Faker('sentence', nb_words=100, variable_nb_words=True)
     price = factory.fuzzy.FuzzyDecimal(0.10, 9999.99)
 
 
