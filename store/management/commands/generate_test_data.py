@@ -24,9 +24,6 @@ class Command(BaseCommand):
         User.objects.exclude(username='ruzin').delete()
         Product.objects.all().delete()
 
-        order = OrderFactory()
-        print(order.user)
-
         users = [UserFactory() for _ in range(USERS_COUNT)]
         products = [ProductFactory() for _ in range(PRODUCTS_COUNT)]
         orders = [OrderFactory(user=random.choice(users)) for _ in range(ORDERS_COUNT)]
@@ -52,10 +49,5 @@ class Command(BaseCommand):
         Order.objects.update(
             total=Subquery(items_subquery)
         )
-
-        order = Order()
-        order.save()
-
-        Order.objects.create()
 
         # UPDATE order SET total = (SELECT order_id, sum(price * quantity) as ttl FROM order_item WHERE order_item.order_id = order.id GROUP BY order.id)
