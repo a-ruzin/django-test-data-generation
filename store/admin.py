@@ -25,8 +25,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('admin_order_quantity'))
     def quantity(self, obj):
-        return 'hoho'
-        # return str(obj.items.aggregate(qty=Sum('quantity'))['qty'])
+        return str(obj.items.aggregate(qty=Sum('quantity'))['qty'])
 
 
 @admin.register(OrderItem)
